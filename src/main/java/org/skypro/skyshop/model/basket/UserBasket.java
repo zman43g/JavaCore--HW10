@@ -1,9 +1,8 @@
 package org.skypro.skyshop.model.basket;
 
-import org.springframework.stereotype.Component;
 
 import java.util.List;
-@Component
+
 public class UserBasket {
     private final List<BasketItem> userBasket;
     private final int total;
@@ -11,6 +10,14 @@ public class UserBasket {
     public UserBasket(List<BasketItem> userBasket) {
         this.userBasket = userBasket;
         this.total = calculate(userBasket);
+    }
+
+    public List<BasketItem> getUserBasket() {
+        return userBasket;
+    }
+
+    public int getTotal() {
+        return total;
     }
 
     private static int calculate(List<BasketItem> userBasket) {
