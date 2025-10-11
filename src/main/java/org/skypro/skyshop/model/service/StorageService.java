@@ -32,13 +32,14 @@ public class StorageService {
 
     private void insertData() {
 
-        Article[] articles = new Article[5];
+        Article[] articles = new Article[3];
         articles[0] = new Article("О вреде соли", "Соль очень вредна в больших количествах!", UUID.randomUUID());
         articles[1] = new Article("О ПДД", "Необходимо соблюдать ПДД!", UUID.randomUUID());
         articles[2] = new Article("О пользе крепкого сна", "Крепкий сон полезен для здоровья.", UUID.randomUUID());
-        articleMap.put(UUID.randomUUID(), articles[0]);
-        articleMap.put(UUID.randomUUID(), articles[1]);
-        articleMap.put(UUID.randomUUID(), articles[2]);
+
+        articleMap.put(articles[0].getId(), articles[0]);
+        articleMap.put(articles[1].getId(), articles[1]);
+        articleMap.put(articles[2].getId(), articles[2]);
 
         Product[] product = new Product[5];
         product[0] = new SimpleProduct("Сахар", UUID.randomUUID(), 80);
@@ -47,11 +48,11 @@ public class StorageService {
         product[3] = new SimpleProduct("Соль", UUID.randomUUID(), 20);
         product[4] = new DiscountedProduct("Овсянка", UUID.randomUUID(), 200, 40);
 
-        productMap.put(UUID.randomUUID(), product[0]);
-        productMap.put(UUID.randomUUID(), product[1]);
-        productMap.put(UUID.randomUUID(), product[2]);
-        productMap.put(UUID.randomUUID(), product[3]);
-        productMap.put(UUID.randomUUID(), product[4]);
+        productMap.put(product[0].getId(), product[0]);
+        productMap.put(product[1].getId(), product[1]);
+        productMap.put(product[2].getId(), product[2]);
+        productMap.put(product[3].getId(), product[3]);
+        productMap.put(product[4].getId(), product[4]);
 
     }
 
@@ -71,4 +72,9 @@ public class StorageService {
             return allProductsAndArticles;
         }
     }
+
+    public Optional<Product> getProductById(UUID id) {
+        return Optional.ofNullable(productMap.get(id));
+    }
+
 }
