@@ -26,7 +26,7 @@ public class BasketService {
 
     public void addProduct(UUID id) {
         if (storageService.getProductById(id).isEmpty()) {
-            throw new NoSuchProductException();
+            throw new NoSuchProductException(id);
         }
         productBasket.addProdToBasket(id);
     }
@@ -35,7 +35,7 @@ public class BasketService {
         List<BasketItem> basketItems = productBasket.getProdBasket()
                 .entrySet()
                 .stream()
-                .map(el -> new BasketItem(storageService.getProductById(el.getKey()).orElseThrow(NoSuchProductException::new), el.getValue()))
+                .map(el -> new BasketItem(storageService.getProductById(el.getKey()).orElseThrow(), el.getValue()))
                 .collect(Collectors.toCollection(ArrayList::new));
         return new UserBasket(basketItems);
     }
