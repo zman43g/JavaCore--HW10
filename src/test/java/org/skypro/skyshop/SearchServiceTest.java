@@ -18,6 +18,7 @@ import org.skypro.skyshop.model.service.StorageService;
 
 import java.util.*;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -66,7 +67,12 @@ public class SearchServiceTest {
         Collection<Searchable> Obj = getAllProducts();
         when(storageService.uniteSearchable()).thenReturn(Obj);
         List<SearchResult> results = searchService.search(query);
-        Assertions.assertFalse(results.isEmpty());
+        assertThat(results.get(0).getName().toLowerCase()).
+                isNotNull().
+                contains(query.toLowerCase());
+        //Assertions.assertEquals(query.toLowerCase(), results.get(0).getName().toLowerCase());
+        //Assertions.assertFalse(results.isEmpty());
+
     }
 
 }

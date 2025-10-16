@@ -21,6 +21,7 @@ import org.skypro.skyshop.model.service.StorageService;
 import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,15 +37,17 @@ public class BasketServiceTest {
     @Test
     public void basketServiceAddProductDoesNotExist_ThrowException() {
 
-        Exception thrownException = null;
-        try {
-            basketService.addProduct(UUID.randomUUID());
-        } catch (Exception e) {
-            thrownException = e;
-        }
-        assertThat(thrownException)
-                .isNotNull()
-                .isExactlyInstanceOf(NoSuchProductException.class);
+//        Exception thrownException = null;
+//        try {
+//            basketService.addProduct(UUID.randomUUID());
+//        } catch (Exception e) {
+//            thrownException = e;
+//        }
+//        assertThat(thrownException)
+//                .isNotNull()
+//                .isExactlyInstanceOf(NoSuchProductException.class);
+
+        assertThrows(NoSuchProductException.class, () -> basketService.addProduct(UUID.randomUUID()));
     }
 
     @ParameterizedTest
@@ -93,6 +96,19 @@ public class BasketServiceTest {
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("total", quantity * product.getPrice());
 
-    }
+        assertThat(basketService.getUserBasket().getUserBasket().get(0).getItem().getId())
+                .isNotNull()
+                .isEqualTo(product.getId());
 
+        assertThat(basketService.getUserBasket().getUserBasket().get(0).getQuantity())
+                .isNotNull()
+                .isEqualTo(quantity);
+
+
+    }
+    @Test
+    public void basketServiceWhenProductBasketGetProdBasketIsNull() {
+        when(productBasket.getProdBasket()).thenReturn(null);
+        assertThrows(NullPointerException.class, () -> basketService.getUserBasket().getUserBasket().isEmpty());
+    }
 }
