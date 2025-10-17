@@ -46,7 +46,7 @@ public final class Article implements Searchable {
     @JsonIgnore
     @Override
     public String getNameOfSearchable() {
-        return articleName;
+        return articleName + " " + articleText;
     }
 
     @JsonIgnore
